@@ -12,11 +12,13 @@ import { Stage, Layer } from "react-konva";
 import { NotificationContainer, NotificationManager } from "react-notifications";
 import Slideshow from "../Slideshow";
 
-const width = 1600;
-const height = 800;
+const width = 1400;
+const height = 700;
 const ENDPOINT = "139.144.172.98:7007";
 //const ENDPOINT = "http://localhost:7007";
 const socket = io(ENDPOINT, { transports: ["websocket", "polling"] });
+
+document.body.style = "background: hsl(216, 100%, 99%)";
 
 const Canvas = ({ shapes, setShapes, username, roomName }) => {
   //can we combine these drawing options into one object usestate?
@@ -401,19 +403,22 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
     return newShape;
   }
 
-  
   return (
     <div className="Container" style={{ maxWidth: width }}>
-      
-      {showSlideshow ? (<div className="Slideshow-Page-Container">
-                          <Slideshow Frames={uri}/>
-                          <button id="move-to-canvas-button" onClick={() => setShowSlideshow(!showSlideshow)} > Back </button>
-                        </div>) : (
+      {showSlideshow ? (
+        <div className="Slideshow-Page-Container">
+          <Slideshow Frames={uri} />
+          <button id="move-to-canvas-button" onClick={() => setShowSlideshow(!showSlideshow)}>
+            {" "}
+            Back{" "}
+          </button>
+        </div>
+      ) : (
         <>
           <div className="userList">
             <h3>Users</h3>
             <UserDropdown />
-          </div> 
+          </div>
           <Toolbar items={toolbar_params} />
 
           <div className="Canvas-Container">
@@ -511,9 +516,9 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
               </div>
 
               <div className="tools" style={{ fontSize: "1.5em" }}>
-              <button onClick={() => setShowSlideshow(!showSlideshow)} > View Slideshow </button>
+                <button onClick={() => setShowSlideshow(!showSlideshow)}> View Slideshow </button>
               </div>
-              
+
               {/* </div> */}
               {/* </div> */}
             </section>
@@ -528,7 +533,8 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
               <FrameView numFrames={3} frame={uri} width={width} height={height} />
             </>
           </div>
-        </> )}
+        </>
+      )}
     </div>
   );
 };

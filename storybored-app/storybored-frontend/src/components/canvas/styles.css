@@ -32,6 +32,7 @@
 .Canvas {
   margin: 0 auto;
   border: black solid 1px;
+  background-color: white;
 }
 
 .Container .Toolbar {
@@ -43,7 +44,7 @@
   margin-left: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
-  border: solid black 1px;
+  /* border: solid black 1px; */
 }
 
 .Container .Toolbar-Item {
@@ -103,7 +104,8 @@
   font-size: larger;
 }
 
-.Container .userList p, h3{
+.Container .userList p,
+h3 {
   margin: 0;
   cursor: default;
 }
@@ -122,6 +124,7 @@
 
 .FrameViewItem {
   border: solid black 1px;
+  background-color: white;
 }
 
 .FrameViewImage {
@@ -173,7 +176,7 @@
   justify-content: center;
 }
 
-.Slideshow-Page-Container #move-to-canvas-button{
+.Slideshow-Page-Container #move-to-canvas-button {
   margin-top: 1em;
   width: 15%;
 }

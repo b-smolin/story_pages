@@ -5,13 +5,13 @@ const Home = ({ callback }) => {
   const navigate = useNavigate();
   const [nameValue, setNameValue] = useState("player");
   const [roomValue, setRoomValue] = useState("room");
-  const navToCreateRoom = () => {
-    navigate("/CreateRoom");
+  const navToCanvas = () => {
+    navigate("/Canvas");
   };
 
   const submit = () => {
     callback(nameValue, roomValue);
-    navToCreateRoom();
+    navToCanvas();
   };
 
   return (
