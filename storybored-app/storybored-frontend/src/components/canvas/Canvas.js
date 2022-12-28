@@ -14,7 +14,7 @@ import Slideshow from "../Slideshow";
 
 const width = 1400;
 const height = 700;
-const ENDPOINT = "139.144.172.98:7007";
+const ENDPOINT = "143.42.3.178:7007";
 //const ENDPOINT = "http://localhost:7007";
 const socket = io(ENDPOINT, { transports: ["websocket", "polling"] });
 
