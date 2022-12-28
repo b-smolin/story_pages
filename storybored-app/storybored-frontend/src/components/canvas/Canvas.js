@@ -3,6 +3,7 @@ import { HexColorPicker } from "react-colorful";
 import { GiPencil, GiSquare, GiCircle, GiPointing } from "react-icons/gi";
 import { BsFillEraserFill, BsTypeBold } from "react-icons/bs";
 import { BiShapePolygon } from "react-icons/bi";
+import { TbOvalVertical } from "react-icons/tb";
 import Shape from "../shape/Shape";
 import Toolbar from "../Toolbar.js";
 import FrameView from "../FrameView";
@@ -45,7 +46,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
   const stageRef = React.useRef(null);
   const nickname = username;
   const room = roomName;
-  const drawing_tools = ["pen", "rectangle", "circle", "custom shape", "words"];
+  const drawing_tools = ["pen", "rectangle", "circle", "custom shape", "words", "ellipse"];
 
   useEffect(() => {
     socket.emit("join", { nickname, room }, (error) => {
@@ -161,7 +162,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
         socket.emit("removeShape", room, focusedCanvas, e.target.attrs.id);
       }
       return;
-    } catch (err) {}
+    } catch (err) { }
   };
 
   /**MOUSEMOVE EVENT HANDLER FUNCTION
@@ -172,7 +173,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
   const handleMouseMove = (e) => {
     try {
       // no drawing - skipping
-      if ((!isDrawing.current && tool !== "select") || tool === "erase" || tool === "words") {
+      if ((!isDrawing.current && tool !== "select") || tool === "erase" || tool === "words" || tool === "ellipse") {
         return;
       }
       //get pointer position
@@ -216,7 +217,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
             modShape.rotation = modShape + sum;
           }
         }
-        if (modShape.type === "rectangle") {
+        if (modShape.type === "rectangle" || modShape.type === "ellipse") {
           if (selectOption === "drag") {
             modShape.x = pos.x - modShape.width / 2;
             modShape.y = pos.y - modShape.height / 2;
@@ -276,6 +277,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
   const setSelect = () => setTool("select");
   const setErase = () => setTool("erase");
   const setWords = () => setTool("words");
+  const setEllipse = () => setTool("ellipse");
 
   //Array containing objects for the toolbar; each object has an onClick function and an icon
   const toolbar_params = [
@@ -286,6 +288,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
     { func: setSelect, icon: <GiPointing /> },
     { func: setErase, icon: <BsFillEraserFill /> },
     { func: setWords, icon: <BsTypeBold /> },
+    { func: setEllipse, icon: <TbOvalVertical /> },
   ];
 
   const UserDropdown = () => {
@@ -398,6 +401,21 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
         draggable: false,
         listening: true,
         rotation: 0,
+      };
+    }
+    if (tool === "ellipse") {
+      newShape = {
+        type: "ellipse",
+        id: tempId,
+        radiusX: 20,
+        radiusY: 15,
+        x: pos.x,
+        y: pos.y,
+        draggable: false,
+        listening: true,
+        stroke: strokeColor,
+        strokeWidth: strokeWidth,
+        fill: fillColor,
       };
     }
     return newShape;
