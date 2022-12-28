@@ -17,8 +17,8 @@ const Home = ({ callback }) => {
   return (
     <div className="Home">
       <h1>StoryBored</h1>
-      Welcome to StoryBored, a collaborative drawing application that allows you to draw on multiple frames in real-time with friends anywhere on the
-      planet
+      Welcome to StoryPages, a collaborative drawing application that allows you to draw on multiple frames in real-time with friends anywhere on the
+      planet. If the room name you enter already exists you will be taken to that room. Otherwise, the server will spin up a new room for you.
       <h2>Enter your name and click 'That's me!' to continue!</h2>
       <form>
         <label htmlFor="username-input" id="username-label">
