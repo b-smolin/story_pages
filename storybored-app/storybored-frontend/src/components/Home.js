@@ -16,23 +16,33 @@ const Home = ({ callback }) => {
 
   return (
     <div className="Home">
-      <h1>StoryBored</h1>
-      Welcome to StoryPages, a collaborative drawing application that allows you to draw on multiple frames in real-time with friends anywhere on the
-      planet. If the room name you enter already exists you will be taken to that room. Otherwise, the server will spin up a new room for you.
-      <h2>Enter your name and click 'That's me!' to continue!</h2>
-      <form>
-        <label htmlFor="username-input" id="username-label">
-          Username:
-        </label>
-        <input type="text" id="username-input" onChange={(e) => setNameValue(e.target.value)}></input>
-        <label htmlFor="room-input" id="room-label">
-          Room:
-        </label>
-        <input type="text" id="room-input" onChange={(e) => setRoomValue(e.target.value)}></input>
-      </form>
-      <button id="create-room-button" onClick={submit}>
-        That's me!
-      </button>
+      <div id="home-text">
+        <h1>StoryBored</h1>
+        <p1>
+          Welcome to StoryPages, a collaborative drawing application that allows you to draw on multiple frames in real-time with friends anywhere on
+          the planet. If the room name you enter already exists you will be taken to that room. Otherwise, the server will spin up a new room for you.
+        </p1>
+        <h2>Enter your name and click 'That's me!' to continue!</h2>
+        <form>
+          <div>
+            <label htmlFor="username-input" id="username-label">
+              Username:
+            </label>
+            <input type="text" id="username-input" onChange={(e) => setNameValue(e.target.value)}></input>
+          </div>
+          <div>
+            <label htmlFor="room-input" id="room-label">
+              Room:
+            </label>
+            <input type="text" id="room-input" onChange={(e) => setRoomValue(e.target.value)}></input>
+          </div>
+        </form>
+        <div>
+          <button id="create-room-button" onClick={submit}>
+            That's me!
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

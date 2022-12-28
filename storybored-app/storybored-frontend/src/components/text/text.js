@@ -1,5 +1,4 @@
 import React from "react";
-import { BsWordpress } from "react-icons/bs";
 import { Text } from "react-konva";
 
 const Words = (props) => {

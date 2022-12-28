@@ -1,11 +1,13 @@
-* {
+/* * {
   font-family: "Indie Flower";
-}
+} */
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Indie Flower";
+
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -44,24 +46,41 @@ code {
   font-size: 3em;
 }
 
+.Home p1 {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  font-size: 1.1em;
+}
+
+/* .Home h2 {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+} */
+
 .CreateRoom #start-button,
 .Home #create-room-button {
   width: 12rem;
   height: 5rem;
-  font-size: 1em;
+  font-size: 1.25em;
   border: 1px solid black;
+  font-family: "Indie Flower";
 }
 
 .CreateRoom label,
 .Home label,
 form {
   margin: 0.5em;
-  font-size: 1.25em;
+  font-size: 1.5em;
 }
 
 .CreateRoom #canvas-size-input,
+.Home #room-input,
 .Home #username-input {
   font-size: 1em;
+}
+
+.Home #home-text {
+  column-count: 2;
+  column-gap: 20px;
+  width: 80%;
 }
 
 .CreateRoom form {
