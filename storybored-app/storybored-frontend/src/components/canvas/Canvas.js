@@ -73,6 +73,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
     socket.on("message", (msg) => {
       let show = JSON.parse(msg.text);
       let frame = JSON.parse(msg.frame);
+      console.log(show);
       //   console.log(frame);
       if (show.id === null || frame !== focusedCanvas) {
         return;
@@ -162,7 +163,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
         socket.emit("removeShape", room, focusedCanvas, e.target.attrs.id);
       }
       return;
-    } catch (err) { }
+    } catch (err) {}
   };
 
   /**MOUSEMOVE EVENT HANDLER FUNCTION
@@ -249,7 +250,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
         socket.emit("sendData", room, focusedCanvas, JSON.stringify(modShape));
       }
     } catch (err) {
-      console.log(err);
+      //   console.log(err);
       return;
     }
   };
@@ -407,8 +408,10 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
       newShape = {
         type: "ellipse",
         id: tempId,
-        radiusX: 20,
-        radiusY: 15,
+        radius: {
+          x: 50,
+          y: 30,
+        },
         x: pos.x,
         y: pos.y,
         draggable: false,
