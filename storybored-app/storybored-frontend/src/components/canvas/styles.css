@@ -102,6 +102,7 @@
   border: solid black 1px;
   padding: 0.25em;
   font-size: larger;
+  background-color: white;
 }
 
 .Container .userList p,
