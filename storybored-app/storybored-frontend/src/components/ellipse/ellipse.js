@@ -14,17 +14,7 @@ const Ellipse = (props) => {
       strokeWidth={properties.strokeWidth}
       listening={properties.listening}
       draggable={properties.draggable}
-      // key={properties.key}
-      // id={properties.id}
-      // x={properties.x}
-      // y={properties.y}
-      // radiusX={properties.radiusX}
-      // radiusY={properties.radiusY}
-      // fill={properties.fillColor}
-      // stroke={properties.strokeColor}
-      // strokeWidth={properties.strokeWidth}
-      // draggable={properties.draggable}
-      // listening={properties.listening}
+      id={properties.id}
     />
   );
 };
