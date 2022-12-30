@@ -3,6 +3,7 @@ import { HexColorPicker } from "react-colorful";
 import { GiPencil, GiSquare, GiCircle, GiPointing } from "react-icons/gi";
 import { BsFillEraserFill, BsTypeBold } from "react-icons/bs";
 import { BiShapePolygon } from "react-icons/bi";
+import { TbOvalVertical } from "react-icons/tb";
 import Shape from "../shape/Shape";
 import Toolbar from "../Toolbar.js";
 import FrameView from "../FrameView";
@@ -45,7 +46,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
   const stageRef = React.useRef(null);
   const nickname = username;
   const room = roomName;
-  const drawing_tools = ["pen", "rectangle", "circle", "custom shape", "words"];
+  const drawing_tools = ["pen", "rectangle", "circle", "custom shape", "words", "ellipse"];
 
   useEffect(() => {
     socket.emit("join", { nickname, room }, (error) => {
@@ -72,6 +73,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
     socket.on("message", (msg) => {
       let show = JSON.parse(msg.text);
       let frame = JSON.parse(msg.frame);
+      console.log(show);
       //   console.log(frame);
       if (show.id === null || frame !== focusedCanvas) {
         return;
@@ -196,6 +198,12 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
           let rad = Math.sqrt(x * x + y * y);
           tempShape.radius = rad;
         }
+        if (tool === "ellipse") {
+          let rad = tempShape.radius;
+          rad.x = Math.abs(pos.x - tempShape.x);
+          rad.y = Math.abs(pos.y - tempShape.y);
+          tempShape.radius = rad;
+        }
         if (tool === "custom shape") {
           tempShape.points = tempShape.points.concat([pos.x, pos.y]);
         }
@@ -206,6 +214,10 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
         //hellish, refactor
         let i = shapes.findIndex((element) => element.id === e.target.attrs.id);
         modShape = shapes[i];
+        if (modShape == null) {
+          console.error("couldnt find the right shape");
+        }
+
         if (modShape.type === "circle") {
           if (selectOption === "drag") {
             modShape.x = pos.x;
@@ -216,6 +228,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
             modShape.rotation = modShape + sum;
           }
         }
+
         if (modShape.type === "rectangle") {
           if (selectOption === "drag") {
             modShape.x = pos.x - modShape.width / 2;
@@ -226,6 +239,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
             modShape.rotation = modShape.rotation + sum;
           }
         }
+
         if (modShape.type === "line") {
           if (selectOption === "drag") {
             modShape.offsetX = -(pos.x - modShape.points[0]);
@@ -236,6 +250,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
             modShape.rotation = modShape + sum;
           }
         }
+
         if (modShape.type === "words")
           if (selectOption === "drag") {
             modShape.x = pos.x - 15;
@@ -245,10 +260,17 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
         //   let sum = selectOption === "rotateR" ? 1 : -1;
         //   modShape.rotation = modShape + sum;
         // }
+
+        if (modShape.type === "ellipse") {
+          if (selectOption === "drag") {
+            modShape.x = pos.x;
+            modShape.y = pos.y;
+          }
+        }
         socket.emit("sendData", room, focusedCanvas, JSON.stringify(modShape));
       }
     } catch (err) {
-      console.log(err);
+      //   console.log(err);
       return;
     }
   };
@@ -276,6 +298,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
   const setSelect = () => setTool("select");
   const setErase = () => setTool("erase");
   const setWords = () => setTool("words");
+  const setEllipse = () => setTool("ellipse");
 
   //Array containing objects for the toolbar; each object has an onClick function and an icon
   const toolbar_params = [
@@ -286,6 +309,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
     { func: setSelect, icon: <GiPointing /> },
     { func: setErase, icon: <BsFillEraserFill /> },
     { func: setWords, icon: <BsTypeBold /> },
+    { func: setEllipse, icon: <TbOvalVertical /> },
   ];
 
   const UserDropdown = () => {
@@ -398,6 +422,23 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
         draggable: false,
         listening: true,
         rotation: 0,
+      };
+    }
+    if (tool === "ellipse") {
+      newShape = {
+        type: "ellipse",
+        id: tempId,
+        radius: {
+          x: 6,
+          y: 4,
+        },
+        x: pos.x,
+        y: pos.y,
+        draggable: false,
+        listening: true,
+        stroke: strokeColor,
+        strokeWidth: strokeWidth,
+        fill: fillColor,
       };
     }
     return newShape;
