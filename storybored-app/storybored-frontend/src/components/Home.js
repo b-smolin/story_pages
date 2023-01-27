@@ -9,7 +9,7 @@ const Home = ({ callback }) => {
     navigate("/Canvas");
   };
 
-  const submit = () => {
+  const submit = (event) => {
     callback(nameValue, roomValue);
     navToCanvas();
   };
@@ -20,7 +20,8 @@ const Home = ({ callback }) => {
         <h1>StoryBored</h1>
         <p1>
           Welcome to StoryPages, a collaborative drawing application that allows you to draw on multiple frames in real-time with friends anywhere on
-          the planet. If the room name you enter already exists you will be taken to that room. Otherwise, the server will spin up a new room for you.
+          the planet. If the room name you enter already exists you will be taken to that room. Otherwise, the server will spin up a new room for you
+          and take you there.
         </p1>
         <h2>Enter your name and click 'That's me!' to continue!</h2>
         <form>
