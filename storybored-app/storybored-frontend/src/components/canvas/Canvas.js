@@ -15,7 +15,7 @@ import Slideshow from "../Slideshow";
 
 const width = 1400;
 const height = 700;
-const ENDPOINT = "143.42.3.178:7007";
+const ENDPOINT = "45.79.174.22:7007";
 //const ENDPOINT = "http://localhost:7007";
 const socket = io(ENDPOINT, { transports: ["websocket", "polling"] });
 
@@ -73,8 +73,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
     socket.on("message", (msg) => {
       let show = JSON.parse(msg.text);
       let frame = JSON.parse(msg.frame);
-      console.log(show);
-      //   console.log(frame);
+
       if (show.id === null || frame !== focusedCanvas) {
         return;
       }
@@ -94,9 +93,7 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
     socket.on("update", (data) => {
       let shape_update = new Map(Object.entries(JSON.parse(data.message)));
       let fresh_shapes = Array.from(shape_update.values());
-      //   console.log(fresh_shapes);
       setShapes((shapes) => [...fresh_shapes]);
-      //   console.log(shapes);
     });
 
     socket.on("notification", (notif) => {
@@ -141,7 +138,6 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
     const pos = e.target.getStage().getPointerPosition();
     try {
       if (drawing_tools.includes(tool)) {
-        console.log("here");
         isDrawing.current = true;
         lastShape = initializeShape(tool, pos);
         updateUndoStack((undoStack) => [...undoStack, tempId]);
@@ -153,7 +149,6 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
         isModding.current = true;
         let i = shapes.findIndex((element) => element.id === e.target.attrs.id);
         modShape = shapes[i];
-        console.log(modShape);
       } else if (tool === "erase") {
         if (e.target.attrs.className === "Canvas") {
           return;
@@ -305,11 +300,11 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
     { func: setPen, icon: <GiPencil /> },
     { func: setRect, icon: <GiSquare /> },
     { func: setCircle, icon: <GiCircle /> },
+    { func: setEllipse, icon: <TbOvalVertical /> },
     { func: setCustom, icon: <BiShapePolygon /> },
     { func: setSelect, icon: <GiPointing /> },
     { func: setErase, icon: <BsFillEraserFill /> },
     { func: setWords, icon: <BsTypeBold /> },
-    { func: setEllipse, icon: <TbOvalVertical /> },
   ];
 
   const UserDropdown = () => {
@@ -559,9 +554,6 @@ const Canvas = ({ shapes, setShapes, username, roomName }) => {
               <div className="tools" style={{ fontSize: "1.5em" }}>
                 <button onClick={() => setShowSlideshow(!showSlideshow)}> View Slideshow </button>
               </div>
-
-              {/* </div> */}
-              {/* </div> */}
             </section>
           </div>
 
